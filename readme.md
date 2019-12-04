@@ -7,7 +7,8 @@ There are some elements of Fluent Bit that are configured for the entire service
 ```
 [SERVICE]
     Flush         1
-    Log_Level     ${LOG_LEVEL}
+    Log_File      /var/log/fluentbit.log
+    Log_Level     error
     Daemon        off
     Parsers_File  parsers.conf
     HTTP_Server   On
@@ -19,7 +20,11 @@ There are some elements of Fluent Bit that are configured for the entire service
 @INCLUDE filter-kubernetes.conf
 ```
 
-You will notice in the example below that we are making use of the [@INCLUDE](https://fluentbit.io/documentation/0.13/configuration/file.html#config_include_file) configuration command. This allows you to break your configuration up into different modular files and include them as well.
+You will notice in the example below that we are making use of the [@INCLUDE](https://fluentbit.io/documentation/0.13/configuration/file.html#config_include_file) configuration command. This allows you to break your configuration up into different modular files and include them as well. The Log_File and Log_Level are used to set how Fluent Bit creates diagnostic logs for itself; this does not have any impact on the logs you monitor.
+
+## Routing
+
+Routing is a core feature that allows to route your data through Filters and finally to one or multiple destinations. Please take the time to read the [official documentation](https://docs.fluentbit.io/manual/getting_started/routing) on the subject. You will learn how the Tag value you set on an input relates to what filtering and outputs will match the data.
 
 ## Input
 
@@ -64,8 +69,17 @@ We can use the [Record Modifier](https://fluentbit.io/documentation/0.12/filter/
     Record service_name Sample-App-Name
 ```
 
-## Buffer
-
-## Routing
-
 ## Output
+
+Once you have input log data and filtered it, you will want to send it someplace. That is what an [output plugin](https://docs.fluentbit.io/manual/output) is for; hopefully you have already installed [New Relic's output plugin for Fluent Bit](https://docs.newrelic.com/docs/logs/new-relic-logs/enable-logs/enable-new-relic-logs-fluent-bit). The example below will match on everything; when testing be careful. Once you match on an entry it will not be in the pipeline anymore; if the newrelic output plugin is after your test output no logs will be sent to New Relic.
+
+It is recommended to use an API_KEY if rotating or changing the keys will ever be necessary; alternatively a license key can be used. maxBufferSize and maxRecords are optional and defined in the documentation. In the examples below there are references to environment variables; you can simply put the values right into the configuration as well.
+
+```
+[OUTPUT]
+    Name  newrelic
+    Match *
+    licenseKey ${LICENSE_KEY}
+    maxBufferSize ${BUFFER_SIZE}
+    maxRecords ${MAX_RECORDS}
+```
