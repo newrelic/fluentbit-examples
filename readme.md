@@ -83,7 +83,7 @@ It is recommended to use an API_KEY if rotating or changing the keys will ever b
 [OUTPUT]
     Name  newrelic
     Match *
-    licenseKey ${LICENSE_KEY}
+    apiKey ${API_KEY}
     maxBufferSize ${BUFFER_SIZE}
     maxRecords ${MAX_RECORDS}
 ```
