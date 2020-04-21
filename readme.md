@@ -63,12 +63,13 @@ A list of available filter plugins can be [found here](https://docs.fluentbit.io
 
 ### Record Modifier
 
-We can use the [Record Modifier](https://fluentbit.io/documentation/0.12/filter/record_modifier.html) filter to add brand new attributes and values to the log entry. The example below matches to any input; all entries will have the hostname and service_name added to them. The hostname record is using an environment variable to get the hostname value. Service_name is a standard field in New Relic Logs that can be used to indicate what application is generating the log data. It is always optimal to match this value up with the same application name you are using in your New Relic APM configuration.
+We can use the [Record Modifier](https://fluentbit.io/documentation/0.12/filter/record_modifier.html) filter to add brand new attributes and values to the log entry. The example below matches to any input; all entries will have logtype, hostname and service_name added to them. Logtype is an important attribute to add for quick filtering, searching and triggering parsing rules. In the example below, adding nginx as the logtype will result in the built-in Nginx Access log parsing being applied. The hostname record is using an environment variable to get the hostname value. Service_name is a standard field in New Relic Logs that can be used to indicate what application is generating the log data. It is always optimal to match this value up with the same application name you are using in your New Relic APM configuration.
 
 ```
 [FILTER]
     Name record_modifier
     Match *
+    Record logtype nginx
     Record hostname ${HOSTNAME}
     Record service_name Sample-App-Name
 ```
