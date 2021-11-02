@@ -4,7 +4,7 @@
 
 ## Service
 
-There are some elements of Fluent Bit that are configured for the entire service; use this to set global configurations like the flush interval or troubleshooting mechanisms like the [HTTP server]((https://docs.fluentbit.io/manual/configuration/monitoring)). You can find an example in our Kubernetes Fluent Bit daemonset configuration [found here](https://github.com/newrelic/kubernetes-logging/blob/master/fluent-conf.yml).
+There are some elements of Fluent Bit that are configured for the entire service; use this to set global configurations like the flush interval or troubleshooting mechanisms like the [HTTP server]((https://docs.fluentbit.io/manual/administration/monitoring#http-server)). You can find an example in our Kubernetes Fluent Bit daemonset configuration [found here](https://github.com/newrelic/kubernetes-logging/blob/master/fluent-conf.yml).
 
 ```
 [SERVICE]
@@ -26,7 +26,7 @@ You will notice in the example below that we are making use of the [@INCLUDE](ht
 
 ## Routing
 
-Routing is a core feature that allows to route your data through Filters and finally to one or multiple destinations. Please take the time to read the [official documentation](https://docs.fluentbit.io/manual/getting_started/routing) on the subject. You will learn how the Tag value you set on an input relates to what filtering and outputs will match the data.
+Routing is a core feature that allows to route your data through Filters and finally to one or multiple destinations. Please take the time to read the [official documentation](https://docs.fluentbit.io/manual/concepts/data-pipeline/router) on the subject. You will learn how the Tag value you set on an input relates to what filtering and outputs will match the data.
 
 ## Input
 
